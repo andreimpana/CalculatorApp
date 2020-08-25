@@ -206,28 +206,23 @@ public class MainActivity extends AppCompatActivity {
                     eq = output.getText().toString();
 
                     //Split the string at each space
-                    String[] arrStr = eq.split(" ",0);
-
-                    //Trim the spaces
-                    for(int i = 0; i < arrStr.length; i ++){
-                        arrStr[i] = arrStr[i].trim();
-                    }
+                    String[] arrStr = eq.trim().split(" ",0);
 
                     //Convert the string to Post
-                    String PostFixed = postFix(arrStr);
-                    System.out.println("Post Fixed Expression: " + PostFixed);
+
+                    //Debugging to check the PostFxed array
+                    //String PostFixed = postFix(arrStr);
+                    //System.out.println("Post Fixed Expression: " + PostFixed);
 
                     //Begin the calculation of the PostFixed string
-                    double result = Calculate(PostFixed);
+                    double result = Calculate(postFix(arrStr));
                     output.clearComposingText();
                     output.setText(output.getText() + " = " + formatter.format(result));
-
                 }
-
             }
         });
-
     }
+
     /**
      * Assigns numeric values to each operator
      * @param s String of operator
@@ -241,6 +236,7 @@ public class MainActivity extends AppCompatActivity {
         }
         return -1;
     }
+
     /**
      * Converts Infix String to PostFix
      * @param input Array of Strings
@@ -296,6 +292,7 @@ public class MainActivity extends AppCompatActivity {
             return false;
         }
     }
+
     /**
      * Calculates the user generated equation.
      * @param eq String of equation (Must be in post-fix format).
@@ -309,6 +306,4 @@ public class MainActivity extends AppCompatActivity {
         tree.printTree(root);
         return tree.evaluateTree(root);
     }
-
-
 }
