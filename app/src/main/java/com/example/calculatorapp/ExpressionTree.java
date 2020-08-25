@@ -4,7 +4,6 @@ import java.util.Stack;
 
 /**
  * Creates a new Node for the expression tree
- * @param item Value to be inserted into node
  */
 
 class Node {
@@ -24,25 +23,23 @@ class ExpressionTree {
      * @return True if operator else false
      */
     private boolean isOperator(String c) {
-        if (c.equals("+") || c.equals("-") || c.equals("*")  || c.equals("/") || c.equals("^") ) {
-            return true;
-        }
-        return false;
+        return c.equals("+") || c.equals("-") || c.equals("*") || c.equals("/") || c.equals("^");
     }
+
     /**
      * Populates Tree
      * @param postfix String array of postFix expression
      * @return Root node of tree
      */
-    Node populateTree(String postfix[]){
+    Node populateTree(String[] postfix){
         Stack<Node> st = new Stack();
         Node t, t1, t2;
-        for(int i = 0; i < postfix.length; i++){
-            if(!isOperator(postfix[i].trim())){
-                t = new Node(postfix[i].trim());
+        for (String s : postfix) {
+            if (!isOperator(s.trim())) {
+                t = new Node(s.trim());
                 st.push(t);
-            }else{
-                t = new Node(postfix[i].trim());
+            } else {
+                t = new Node(s.trim());
 
                 //Pop two top nodes
                 //Store top
@@ -97,9 +94,7 @@ class ExpressionTree {
         if(root.value.equals("*"))
             return left_value * right_value;
 
-        return (double)(left_value / right_value);
+        return (left_value / right_value);
     }
-
-
 }
 

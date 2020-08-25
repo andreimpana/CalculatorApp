@@ -2,18 +2,13 @@ package com.example.calculatorapp;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.GridView;
 import android.widget.TextView;
-
-import org.w3c.dom.Text;
-
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Stack;
 
 public class MainActivity extends AppCompatActivity {
@@ -36,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         //outputText
-        final TextView output = (TextView) findViewById(R.id.outputText);
+        final TextView output = findViewById(R.id.outputText);
 
         //Buttons
         Button btn_0 = findViewById(R.id.btn_0);
@@ -64,6 +59,7 @@ public class MainActivity extends AppCompatActivity {
         Button btn_right_bracket = findViewById(R.id.bracket_right);
 
         btn_0.setOnClickListener(new View.OnClickListener() {
+            @SuppressLint("SetTextI18n")
             @Override
             public void onClick(View view) {
                 output.setText(output.getText() + "0");
@@ -71,6 +67,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         btn_1.setOnClickListener(new View.OnClickListener() {
+            @SuppressLint("SetTextI18n")
             @Override
             public void onClick(View view) {
                 output.setText(output.getText() + "1");
@@ -79,6 +76,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         btn_2.setOnClickListener(new View.OnClickListener() {
+            @SuppressLint("SetTextI18n")
             @Override
             public void onClick(View view) {
                 output.setText(output.getText() + "2");
@@ -87,6 +85,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         btn_3.setOnClickListener(new View.OnClickListener() {
+            @SuppressLint("SetTextI18n")
             @Override
             public void onClick(View view) {
                 output.setText(output.getText() + "3");
@@ -94,6 +93,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         btn_4.setOnClickListener(new View.OnClickListener() {
+            @SuppressLint("SetTextI18n")
             @Override
             public void onClick(View view) {
                 output.setText(output.getText() + "4");
@@ -102,6 +102,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         btn_5.setOnClickListener(new View.OnClickListener() {
+            @SuppressLint("SetTextI18n")
             @Override
             public void onClick(View view) {
                 output.setText(output.getText() + "5");
@@ -110,6 +111,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         btn_6.setOnClickListener(new View.OnClickListener() {
+            @SuppressLint("SetTextI18n")
             @Override
             public void onClick(View view) {
                 output.setText(output.getText() + "6");
@@ -118,6 +120,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         btn_7.setOnClickListener(new View.OnClickListener() {
+            @SuppressLint("SetTextI18n")
             @Override
             public void onClick(View view) {
                 output.setText(output.getText() + "7");
@@ -126,6 +129,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         btn_8.setOnClickListener(new View.OnClickListener() {
+            @SuppressLint("SetTextI18n")
             @Override
             public void onClick(View view) {
                 output.setText(output.getText() + "8");
@@ -134,6 +138,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         btn_9.setOnClickListener(new View.OnClickListener() {
+            @SuppressLint("SetTextI18n")
             @Override
             public void onClick(View view) {
                 output.setText(output.getText() + "9");
@@ -142,6 +147,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         btn_dec.setOnClickListener(new View.OnClickListener() {
+            @SuppressLint("SetTextI18n")
             @Override
             public void onClick(View view) {
                 output.setText(output.getText() + ".");
@@ -157,6 +163,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         btn_division.setOnClickListener(new View.OnClickListener() {
+            @SuppressLint("SetTextI18n")
             @Override
             public void onClick(View view) {
                 output.setText(output.getText() + " / ");
@@ -164,6 +171,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         btn_multiply.setOnClickListener(new View.OnClickListener() {
+            @SuppressLint("SetTextI18n")
             @Override
             public void onClick(View view) {
                 output.setText(output.getText() + " * ");
@@ -171,6 +179,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         btn_addition.setOnClickListener(new View.OnClickListener() {
+            @SuppressLint("SetTextI18n")
             @Override
             public void onClick(View view) {
                 output.setText(output.getText() + " + ");
@@ -178,6 +187,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         btn_subtract.setOnClickListener(new View.OnClickListener() {
+            @SuppressLint("SetTextI18n")
             @Override
             public void onClick(View view) {
                 output.setText(output.getText() + " - ");
@@ -185,6 +195,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         btn_left_bracket.setOnClickListener(new View.OnClickListener() {
+            @SuppressLint("SetTextI18n")
             @Override
             public void onClick(View view) {
                 output.setText(output.getText() + "(");
@@ -192,6 +203,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         btn_right_bracket.setOnClickListener(new View.OnClickListener() {
+            @SuppressLint("SetTextI18n")
             @Override
             public void onClick(View view) {
                 output.setText(output.getText() + ")");
@@ -217,7 +229,8 @@ public class MainActivity extends AppCompatActivity {
                     //Begin the calculation of the PostFixed string
                     double result = Calculate(postFix(arrStr));
                     output.clearComposingText();
-                    output.setText(output.getText() + " = " + formatter.format(result));
+                    String outputStr = output.getText() + " = " + formatter.format(result);
+                    output.setText(outputStr);
                 }
             }
         });
@@ -244,19 +257,18 @@ public class MainActivity extends AppCompatActivity {
      */
     private String postFix(String[] input){
         //TODO: Fix brackets
-        //TODO: Change function so that it converts a given string to PostFix, helps remove some redundant code in the main function
-        String result = new String("");
+        StringBuilder result = new StringBuilder();
 
         Stack<String> stack = new Stack<>();
 
         for(String x:input){
             if(isNumeric(x))
-                result += x + ",";
+                result.append(x).append(",");
             else if (x.equals("("))
                 stack.push(x);
             else if(x.equals(")")){
                 while(!stack.isEmpty() && !stack.peek().equals("("))
-                    result += stack.pop() + ",";
+                    result.append(stack.pop()).append(",");
                 if(!stack.isEmpty() && !stack.peek().equals("("))
                     return "N/A";
                 else
@@ -265,7 +277,7 @@ public class MainActivity extends AppCompatActivity {
                 while(!stack.isEmpty() && Prec(x) <= Prec(stack.peek())){
                     if(stack.peek().equals("("))
                         return "N/A";
-                    result += stack.pop() + ",";
+                    result.append(stack.pop()).append(",");
                 }
                 stack.push(x);
             }
@@ -273,10 +285,10 @@ public class MainActivity extends AppCompatActivity {
         while(!stack.isEmpty()){
             if(stack.peek().equals("("))
                 return "N/A";
-            result += stack.pop() + ",";
+            result.append(stack.pop()).append(",");
         }
-        result = result.substring(0,result.length() - 1);
-        return result;
+        result = new StringBuilder(result.substring(0, result.length() - 1));
+        return result.toString();
     }
 
     /**
@@ -302,7 +314,7 @@ public class MainActivity extends AppCompatActivity {
         String[] chars = eq.split(",",0);
         ExpressionTree tree = new ExpressionTree();
         Node root = tree.populateTree(chars);
-        System.out.printf("# Generated Tree: ");
+        System.out.print("# Generated Tree: ");
         tree.printTree(root);
         return tree.evaluateTree(root);
     }
