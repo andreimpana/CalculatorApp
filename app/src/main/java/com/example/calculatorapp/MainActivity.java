@@ -224,6 +224,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         btn_equals.setOnClickListener(new View.OnClickListener() {
+            @SuppressLint("SetTextI18n")
             @Override
             public void onClick(View view) {
                 if (!output.getText().toString().contains("=") && left_bracket == right_bracket) {
@@ -231,19 +232,22 @@ public class MainActivity extends AppCompatActivity {
                     eq = output.getText().toString();
 
                     //Convert String to array
-                    String[] arrStr = bracketHandler(eq);
+                    String[] array_string = bracketHandler(eq);
 
                     //Convert String to post fix
-                    String postFixed = postFix(arrStr);
-                    double result = Calculate(postFixed);
+                    String post_fixed_string = postFix(array_string);
+                    if(!post_fixed_string.equals("N/A")) {
+                        double result = Calculate(post_fixed_string);
 
-                    //Output
-                    System.out.print(result);
-                    output.setText("");
-
-                    String outputStr = output.getText() + " = " + formatter.format(result);
-                    output.setText(outputStr);
-                    }  else{
+                        //Output
+                        System.out.print(result);
+                        output.setText("");
+                        String outputStr = output.getText() + " = " + formatter.format(result);
+                        output.setText(outputStr);
+                    }else{
+                        output.setText("Syntax Error");
+                    }
+                }  else{
                     output.setText("Syntax Error");
                 }
             }
@@ -343,25 +347,25 @@ public class MainActivity extends AppCompatActivity {
         int left_bracket_count = 0;
         int right_bracket_count = 0;
 
-        String[] arrStr = inputString.trim().split(" ", 0);
+        String[] array_string = inputString.trim().split(" ", 0);
 
-        List<String> list = new LinkedList<String>(Arrays.asList(arrStr));
+        List<String> list = new LinkedList<>(Arrays.asList(array_string));
         ListIterator<String> iterator = list.listIterator();
 
         while (iterator.hasNext()) {
             String s = iterator.next();
             if (s.indexOf('(') > -1) {
                 left_bracket_count++;
-                String toAdd = s.substring(s.indexOf('(') + 1);
-                System.out.print(toAdd);
+                String string_to_add = s.substring(s.indexOf('(') + 1);
+                System.out.print(string_to_add);
                 iterator.set("(");
-                iterator.add(toAdd);
+                iterator.add(string_to_add);
             }
             if (s.indexOf(')') > -1) {
                 right_bracket_count++;
-                String toAdd = s.substring(0, s.indexOf(')'));
-                System.out.print(toAdd);
-                iterator.set(toAdd);
+                String string_to_add = s.substring(0, s.indexOf(')'));
+                System.out.print(string_to_add);
+                iterator.set(string_to_add);
                 iterator.add(")");
             }
         }
@@ -379,8 +383,8 @@ public class MainActivity extends AppCompatActivity {
         }
 
         Object[] objArray = list.toArray();
-        arrStr = Arrays.copyOf(objArray, objArray.length, String[].class);
-        return arrStr;
+        array_string = Arrays.copyOf(objArray, objArray.length, String[].class);
+        return array_string;
     }
 
 }

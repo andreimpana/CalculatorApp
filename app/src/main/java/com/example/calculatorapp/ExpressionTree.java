@@ -33,7 +33,9 @@ class ExpressionTree {
      */
     Node populateTree(String[] postfix){
         Stack<Node> st = new Stack();
-        Node t, t1, t2;
+        Node t;
+        Node t1;
+        Node t2;
         for (String s : postfix) {
             if (!isOperator(s.trim())) {
                 t = new Node(s.trim());
