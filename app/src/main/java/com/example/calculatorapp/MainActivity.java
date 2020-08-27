@@ -9,6 +9,11 @@ import android.widget.Button;
 import android.widget.TextView;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.ListIterator;
 import java.util.Stack;
 
 public class MainActivity extends AppCompatActivity {
@@ -213,26 +218,43 @@ public class MainActivity extends AppCompatActivity {
         btn_equals.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(!output.getText().toString().contains("=")){
+                if (!output.getText().toString().contains("=")) {
                     //Get equation
                     eq = output.getText().toString();
 
                     //Split the string at each space
-                    String[] arrStr = eq.trim().split(" ",0);
+                    String[] arrStr = eq.trim().split(" ", 0);
+
+                    List<String> list = new LinkedList<String>(Arrays.asList(arrStr));
+                    ListIterator<String> iterator = list.listIterator();
+
+                    while (iterator.hasNext()) {
+                        String s = iterator.next();
+                        if (s.indexOf('(') > -1) {
+                            String toAdd = s.substring(s.indexOf('(') + 1);
+                            System.out.print(toAdd);
+                            iterator.set("(");
+                            iterator.add(toAdd);
+                        }
+                        if (s.indexOf(')') > -1) {
+                            String toAdd = s.substring(0, s.indexOf(')'));
+                            System.out.print(toAdd);
+                            iterator.set(toAdd);
+                            iterator.add(")");
+                        }
+                    }
 
                     //Convert the string to Post
-
                     //Debugging to check the PostFxed array
                     //String PostFixed = postFix(arrStr);
                     //System.out.println("Post Fixed Expression: " + PostFixed);
-
                     //Begin the calculation of the PostFixed string
                     double result = Calculate(postFix(arrStr));
                     output.clearComposingText();
                     String outputStr = output.getText() + " = " + formatter.format(result);
                     output.setText(outputStr);
+                    }
                 }
-            }
         });
     }
 
@@ -273,7 +295,7 @@ public class MainActivity extends AppCompatActivity {
                     return "N/A";
                 else
                     stack.pop();
-        }else{
+            }else{
                 while(!stack.isEmpty() && Prec(x) <= Prec(stack.peek())){
                     if(stack.peek().equals("("))
                         return "N/A";
