@@ -30,6 +30,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         //TODO: When a number is pressed and there already is a result, ANS function
+        //TODO: Add Sin/Cos Implimination
         //Number Format
         final NumberFormat formatter = new DecimalFormat("#0.00");
 
@@ -62,10 +63,26 @@ public class MainActivity extends AppCompatActivity {
         Button btn_equals = findViewById(R.id.btn_equals);
         Button btn_mem_plus = findViewById(R.id.mem_plus);
         Button btn_mem_minus = findViewById(R.id.mem_minus);
+        Button backspace = findViewById(R.id.backspace_btn);
 
         //TODO: Add memory implementation
         Button btn_left_bracket = findViewById(R.id.bracket_left);
         Button btn_right_bracket = findViewById(R.id.bracket_right);
+
+        //Backspace functionality
+        backspace.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                String s = (String) output_textbox.getText();
+                if (!s.isEmpty() && s.indexOf('=') == -1) {
+                    if (s.charAt(s.length() - 1) == ' ')
+                        s = s.substring(0, s.length() - 2);
+                    else
+                        s = s.substring(0, s.length() - 1);
+                    output_textbox.setText(s);
+                }
+            }
+        });
 
         btn_0.setOnClickListener(new View.OnClickListener() {
             @SuppressLint("SetTextI18n")
@@ -277,7 +294,6 @@ public class MainActivity extends AppCompatActivity {
      * @return Converted string
      */
     private String postFix(String[] input){
-        //TODO: Fix brackets
         StringBuilder result = new StringBuilder();
 
         Stack<String> stack = new Stack<>();
