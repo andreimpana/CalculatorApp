@@ -24,10 +24,10 @@
         android:id="@+id/outputText"
         android:layout_width="352dp"
         android:layout_height="178dp"
-        android:textAlignment="textEnd"
-        android:textSize="36sp"
-        android:textStyle="bold"
         android:maxLines="1"
+        android:textAlignment="textEnd"
+        android:textSize="24sp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.658"
@@ -73,7 +73,7 @@
 
     <Button
         android:id="@+id/btn_equals"
-        android:layout_width="363dp"
+        android:layout_width="352dp"
         android:layout_height="49dp"
         android:text="="
         app:layout_constraintBottom_toBottomOf="parent"

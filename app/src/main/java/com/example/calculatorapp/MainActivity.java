@@ -20,6 +20,9 @@ public class MainActivity extends AppCompatActivity {
     //Equations string
     private String eq;
     private Double memory;
+    private boolean valid;
+    int left_bracket = 0;
+    int right_bracket = 0;
 
 
     //On create of main activity
@@ -164,6 +167,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 output.setText("");
+                left_bracket = 0;
+                right_bracket = 0;
             }
         });
 
@@ -204,6 +209,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 output.setText(output.getText() + "(");
+                left_bracket++;
+
             }
         });
 
@@ -212,49 +219,34 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 output.setText(output.getText() + ")");
+                right_bracket++;
             }
         });
 
         btn_equals.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (!output.getText().toString().contains("=")) {
+                if (!output.getText().toString().contains("=") && left_bracket == right_bracket) {
                     //Get equation
                     eq = output.getText().toString();
 
-                    //Split the string at each space
-                    String[] arrStr = eq.trim().split(" ", 0);
+                    //Convert String to array
+                    String[] arrStr = bracketHandler(eq);
 
-                    List<String> list = new LinkedList<String>(Arrays.asList(arrStr));
-                    ListIterator<String> iterator = list.listIterator();
+                    //Convert String to post fix
+                    String postFixed = postFix(arrStr);
+                    double result = Calculate(postFixed);
 
-                    while (iterator.hasNext()) {
-                        String s = iterator.next();
-                        if (s.indexOf('(') > -1) {
-                            String toAdd = s.substring(s.indexOf('(') + 1);
-                            System.out.print(toAdd);
-                            iterator.set("(");
-                            iterator.add(toAdd);
-                        }
-                        if (s.indexOf(')') > -1) {
-                            String toAdd = s.substring(0, s.indexOf(')'));
-                            System.out.print(toAdd);
-                            iterator.set(toAdd);
-                            iterator.add(")");
-                        }
-                    }
+                    //Output
+                    System.out.print(result);
+                    output.setText("");
 
-                    //Convert the string to Post
-                    //Debugging to check the PostFxed array
-                    //String PostFixed = postFix(arrStr);
-                    //System.out.println("Post Fixed Expression: " + PostFixed);
-                    //Begin the calculation of the PostFixed string
-                    double result = Calculate(postFix(arrStr));
-                    output.clearComposingText();
                     String outputStr = output.getText() + " = " + formatter.format(result);
                     output.setText(outputStr);
-                    }
+                    }  else{
+                    output.setText("Syntax Error");
                 }
+            }
         });
     }
 
@@ -340,4 +332,55 @@ public class MainActivity extends AppCompatActivity {
         tree.printTree(root);
         return tree.evaluateTree(root);
     }
+
+
+    /**
+     * Handles Bracket's in equation
+     * @param inputString String of equation (Must be in post-fix format).
+     * @return String array of all operators and numbers
+     */
+    private String[] bracketHandler(String inputString){
+        int left_bracket_count = 0;
+        int right_bracket_count = 0;
+
+        String[] arrStr = inputString.trim().split(" ", 0);
+
+        List<String> list = new LinkedList<String>(Arrays.asList(arrStr));
+        ListIterator<String> iterator = list.listIterator();
+
+        while (iterator.hasNext()) {
+            String s = iterator.next();
+            if (s.indexOf('(') > -1) {
+                left_bracket_count++;
+                String toAdd = s.substring(s.indexOf('(') + 1);
+                System.out.print(toAdd);
+                iterator.set("(");
+                iterator.add(toAdd);
+            }
+            if (s.indexOf(')') > -1) {
+                right_bracket_count++;
+                String toAdd = s.substring(0, s.indexOf(')'));
+                System.out.print(toAdd);
+                iterator.set(toAdd);
+                iterator.add(")");
+            }
+        }
+
+        //Fixes bug above
+        while(left_bracket_count != right_bracket_count){
+            if (left_bracket_count > right_bracket_count){
+                right_bracket_count++;
+                list.add(")");
+            }
+            if (right_bracket_count > left_bracket_count){
+                left_bracket_count++;
+                list.add("(");
+            }
+        }
+
+        Object[] objArray = list.toArray();
+        arrStr = Arrays.copyOf(objArray, objArray.length, String[].class);
+        return arrStr;
+    }
+
 }
