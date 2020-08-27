@@ -39,7 +39,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         //outputText
-        final TextView output = findViewById(R.id.outputText);
+        final TextView output_textbox = findViewById(R.id.outputText);
+        final TextView history_textbox = findViewById(R.id.history_Text);
 
         //Buttons
         Button btn_0 = findViewById(R.id.btn_0);
@@ -70,7 +71,7 @@ public class MainActivity extends AppCompatActivity {
             @SuppressLint("SetTextI18n")
             @Override
             public void onClick(View view) {
-                output.setText(output.getText() + "0");
+                output_textbox.setText(output_textbox.getText() + "0");
             }
         });
 
@@ -78,7 +79,7 @@ public class MainActivity extends AppCompatActivity {
             @SuppressLint("SetTextI18n")
             @Override
             public void onClick(View view) {
-                output.setText(output.getText() + "1");
+                output_textbox.setText(output_textbox.getText() + "1");
 
             }
         });
@@ -87,7 +88,7 @@ public class MainActivity extends AppCompatActivity {
             @SuppressLint("SetTextI18n")
             @Override
             public void onClick(View view) {
-                output.setText(output.getText() + "2");
+                output_textbox.setText(output_textbox.getText() + "2");
 
             }
         });
@@ -96,7 +97,7 @@ public class MainActivity extends AppCompatActivity {
             @SuppressLint("SetTextI18n")
             @Override
             public void onClick(View view) {
-                output.setText(output.getText() + "3");
+                output_textbox.setText(output_textbox.getText() + "3");
             }
         });
 
@@ -104,7 +105,7 @@ public class MainActivity extends AppCompatActivity {
             @SuppressLint("SetTextI18n")
             @Override
             public void onClick(View view) {
-                output.setText(output.getText() + "4");
+                output_textbox.setText(output_textbox.getText() + "4");
 
             }
         });
@@ -113,7 +114,7 @@ public class MainActivity extends AppCompatActivity {
             @SuppressLint("SetTextI18n")
             @Override
             public void onClick(View view) {
-                output.setText(output.getText() + "5");
+                output_textbox.setText(output_textbox.getText() + "5");
 
             }
         });
@@ -122,7 +123,7 @@ public class MainActivity extends AppCompatActivity {
             @SuppressLint("SetTextI18n")
             @Override
             public void onClick(View view) {
-                output.setText(output.getText() + "6");
+                output_textbox.setText(output_textbox.getText() + "6");
 
             }
         });
@@ -131,7 +132,7 @@ public class MainActivity extends AppCompatActivity {
             @SuppressLint("SetTextI18n")
             @Override
             public void onClick(View view) {
-                output.setText(output.getText() + "7");
+                output_textbox.setText(output_textbox.getText() + "7");
 
             }
         });
@@ -140,7 +141,7 @@ public class MainActivity extends AppCompatActivity {
             @SuppressLint("SetTextI18n")
             @Override
             public void onClick(View view) {
-                output.setText(output.getText() + "8");
+                output_textbox.setText(output_textbox.getText() + "8");
 
             }
         });
@@ -149,7 +150,7 @@ public class MainActivity extends AppCompatActivity {
             @SuppressLint("SetTextI18n")
             @Override
             public void onClick(View view) {
-                output.setText(output.getText() + "9");
+                output_textbox.setText(output_textbox.getText() + "9");
 
             }
         });
@@ -158,7 +159,7 @@ public class MainActivity extends AppCompatActivity {
             @SuppressLint("SetTextI18n")
             @Override
             public void onClick(View view) {
-                output.setText(output.getText() + ".");
+                output_textbox.setText(output_textbox.getText() + ".");
 
             }
         });
@@ -166,7 +167,8 @@ public class MainActivity extends AppCompatActivity {
         btn_clr.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                output.setText("");
+                output_textbox.setText("");
+                history_textbox.setText("");
                 left_bracket = 0;
                 right_bracket = 0;
             }
@@ -176,7 +178,7 @@ public class MainActivity extends AppCompatActivity {
             @SuppressLint("SetTextI18n")
             @Override
             public void onClick(View view) {
-                output.setText(output.getText() + " / ");
+                output_textbox.setText(output_textbox.getText() + " / ");
             }
         });
 
@@ -184,7 +186,7 @@ public class MainActivity extends AppCompatActivity {
             @SuppressLint("SetTextI18n")
             @Override
             public void onClick(View view) {
-                output.setText(output.getText() + " * ");
+                output_textbox.setText(output_textbox.getText() + " * ");
             }
         });
 
@@ -192,7 +194,7 @@ public class MainActivity extends AppCompatActivity {
             @SuppressLint("SetTextI18n")
             @Override
             public void onClick(View view) {
-                output.setText(output.getText() + " + ");
+                output_textbox.setText(output_textbox.getText() + " + ");
             }
         });
 
@@ -200,7 +202,7 @@ public class MainActivity extends AppCompatActivity {
             @SuppressLint("SetTextI18n")
             @Override
             public void onClick(View view) {
-                output.setText(output.getText() + " - ");
+                output_textbox.setText(output_textbox.getText() + " - ");
             }
         });
 
@@ -208,7 +210,7 @@ public class MainActivity extends AppCompatActivity {
             @SuppressLint("SetTextI18n")
             @Override
             public void onClick(View view) {
-                output.setText(output.getText() + "(");
+                output_textbox.setText(output_textbox.getText() + "(");
                 left_bracket++;
 
             }
@@ -218,7 +220,7 @@ public class MainActivity extends AppCompatActivity {
             @SuppressLint("SetTextI18n")
             @Override
             public void onClick(View view) {
-                output.setText(output.getText() + ")");
+                output_textbox.setText(output_textbox.getText() + ")");
                 right_bracket++;
             }
         });
@@ -227,9 +229,10 @@ public class MainActivity extends AppCompatActivity {
             @SuppressLint("SetTextI18n")
             @Override
             public void onClick(View view) {
-                if (!output.getText().toString().contains("=") && left_bracket == right_bracket) {
+                if (!output_textbox.getText().toString().contains("=") && left_bracket == right_bracket) {
                     //Get equation
-                    eq = output.getText().toString();
+                    eq = output_textbox.getText().toString();
+                    history_textbox.setText(eq);
 
                     //Convert String to array
                     String[] array_string = bracketHandler(eq);
@@ -241,14 +244,14 @@ public class MainActivity extends AppCompatActivity {
 
                         //Output
                         System.out.print(result);
-                        output.setText("");
-                        String outputStr = output.getText() + " = " + formatter.format(result);
-                        output.setText(outputStr);
+                        output_textbox.setText("");
+                        String outputStr = output_textbox.getText() + " = " + formatter.format(result);
+                        output_textbox.setText(outputStr);
                     }else{
-                        output.setText("Syntax Error");
+                        output_textbox.setText("Syntax Error");
                     }
                 }  else{
-                    output.setText("Syntax Error");
+                    output_textbox.setText("Syntax Error");
                 }
             }
         });
