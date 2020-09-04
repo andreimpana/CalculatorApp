@@ -54,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
         Button btn_7 = findViewById(R.id.btn_7);
         Button btn_8 = findViewById(R.id.btn_8);
         Button btn_9 = findViewById(R.id.btn_9);
-        Button btn_clr = findViewById(R.id.btn_clr);
+        final Button btn_clr = findViewById(R.id.btn_clr);
         Button btn_dec = findViewById(R.id.btn_dec);
         Button btn_division = findViewById(R.id.btn_div);
         Button btn_multiply = findViewById(R.id.btn_multip);
@@ -68,6 +68,7 @@ public class MainActivity extends AppCompatActivity {
         //TODO: Add memory implementation
         Button btn_left_bracket = findViewById(R.id.bracket_left);
         Button btn_right_bracket = findViewById(R.id.bracket_right);
+
 
         //Backspace functionality
         backspace.setOnClickListener(new View.OnClickListener(){
@@ -88,6 +89,8 @@ public class MainActivity extends AppCompatActivity {
             @SuppressLint("SetTextI18n")
             @Override
             public void onClick(View view) {
+                if(history_textbox.getText().length() > 1)
+                    btn_clr.performClick();
                 output_textbox.setText(output_textbox.getText() + "0");
             }
         });
@@ -96,8 +99,9 @@ public class MainActivity extends AppCompatActivity {
             @SuppressLint("SetTextI18n")
             @Override
             public void onClick(View view) {
+                if(history_textbox.getText().length() > 1)
+                    btn_clr.performClick();
                 output_textbox.setText(output_textbox.getText() + "1");
-
             }
         });
 
@@ -105,8 +109,9 @@ public class MainActivity extends AppCompatActivity {
             @SuppressLint("SetTextI18n")
             @Override
             public void onClick(View view) {
+                if(history_textbox.getText().length() > 1)
+                    btn_clr.performClick();
                 output_textbox.setText(output_textbox.getText() + "2");
-
             }
         });
 
@@ -114,6 +119,8 @@ public class MainActivity extends AppCompatActivity {
             @SuppressLint("SetTextI18n")
             @Override
             public void onClick(View view) {
+                if(history_textbox.getText().length() > 1)
+                    btn_clr.performClick();
                 output_textbox.setText(output_textbox.getText() + "3");
             }
         });
@@ -122,8 +129,9 @@ public class MainActivity extends AppCompatActivity {
             @SuppressLint("SetTextI18n")
             @Override
             public void onClick(View view) {
+                if(history_textbox.getText().length() > 1)
+                    btn_clr.performClick();
                 output_textbox.setText(output_textbox.getText() + "4");
-
             }
         });
 
@@ -131,8 +139,9 @@ public class MainActivity extends AppCompatActivity {
             @SuppressLint("SetTextI18n")
             @Override
             public void onClick(View view) {
+                if(history_textbox.getText().length() > 1)
+                    btn_clr.performClick();
                 output_textbox.setText(output_textbox.getText() + "5");
-
             }
         });
 
@@ -140,8 +149,9 @@ public class MainActivity extends AppCompatActivity {
             @SuppressLint("SetTextI18n")
             @Override
             public void onClick(View view) {
+                if(history_textbox.getText().length() > 1)
+                    btn_clr.performClick();
                 output_textbox.setText(output_textbox.getText() + "6");
-
             }
         });
 
@@ -149,8 +159,9 @@ public class MainActivity extends AppCompatActivity {
             @SuppressLint("SetTextI18n")
             @Override
             public void onClick(View view) {
+                if(history_textbox.getText().length() > 1)
+                    btn_clr.performClick();
                 output_textbox.setText(output_textbox.getText() + "7");
-
             }
         });
 
@@ -158,8 +169,9 @@ public class MainActivity extends AppCompatActivity {
             @SuppressLint("SetTextI18n")
             @Override
             public void onClick(View view) {
+                if(history_textbox.getText().length() > 1)
+                    btn_clr.performClick();
                 output_textbox.setText(output_textbox.getText() + "8");
-
             }
         });
 
@@ -167,8 +179,9 @@ public class MainActivity extends AppCompatActivity {
             @SuppressLint("SetTextI18n")
             @Override
             public void onClick(View view) {
+                if(history_textbox.getText().length() > 1)
+                    btn_clr.performClick();
                 output_textbox.setText(output_textbox.getText() + "9");
-
             }
         });
 
@@ -176,11 +189,13 @@ public class MainActivity extends AppCompatActivity {
             @SuppressLint("SetTextI18n")
             @Override
             public void onClick(View view) {
-                output_textbox.setText(output_textbox.getText() + ".");
-
+                String current = output_textbox.getText().toString();
+                if(!current.contains(".") && Character.isDigit(current.charAt(current.length()-1))){
+                    output_textbox.setText(output_textbox.getText() + ".");
+                }
             }
         });
-
+        //Clear Button
         btn_clr.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -190,12 +205,19 @@ public class MainActivity extends AppCompatActivity {
                 right_bracket = 0;
             }
         });
-
+        //Operators
         btn_division.setOnClickListener(new View.OnClickListener() {
             @SuppressLint("SetTextI18n")
             @Override
             public void onClick(View view) {
-                output_textbox.setText(output_textbox.getText() + " / ");
+                if(history_textbox.getText().length() > 1)
+                    btn_clr.performClick();
+
+                String current = output_textbox.getText().toString();
+
+                if(!current.isEmpty() && (!Character.isSpaceChar(current.charAt(current.length()-1)))){
+                    output_textbox.setText(output_textbox.getText() + " / ");
+                }
             }
         });
 
@@ -203,7 +225,13 @@ public class MainActivity extends AppCompatActivity {
             @SuppressLint("SetTextI18n")
             @Override
             public void onClick(View view) {
-                output_textbox.setText(output_textbox.getText() + " * ");
+                if(history_textbox.getText().length() > 1)
+                    btn_clr.performClick();
+                String current = output_textbox.getText().toString();
+
+                if(!current.isEmpty() && (!Character.isSpaceChar(current.charAt(current.length()-1)))){
+                    output_textbox.setText(output_textbox.getText() + " * ");
+                }
             }
         });
 
@@ -211,7 +239,13 @@ public class MainActivity extends AppCompatActivity {
             @SuppressLint("SetTextI18n")
             @Override
             public void onClick(View view) {
-                output_textbox.setText(output_textbox.getText() + " + ");
+                if(history_textbox.getText().length() > 1)
+                    btn_clr.performClick();
+                String current = output_textbox.getText().toString();
+
+                if(!current.isEmpty() && (!Character.isSpaceChar(current.charAt(current.length()-1)))){
+                    output_textbox.setText(output_textbox.getText() + " + ");
+                }
             }
         });
 
@@ -219,7 +253,13 @@ public class MainActivity extends AppCompatActivity {
             @SuppressLint("SetTextI18n")
             @Override
             public void onClick(View view) {
-                output_textbox.setText(output_textbox.getText() + " - ");
+                if(history_textbox.getText().length() > 1)
+                    btn_clr.performClick();
+                String current = output_textbox.getText().toString();
+
+                if(!current.isEmpty() && (!Character.isSpaceChar(current.charAt(current.length()-1)))){
+                    output_textbox.setText(output_textbox.getText() + " - ");
+                }
             }
         });
 
@@ -227,6 +267,8 @@ public class MainActivity extends AppCompatActivity {
             @SuppressLint("SetTextI18n")
             @Override
             public void onClick(View view) {
+                if(history_textbox.getText().length() > 1)
+                    btn_clr.performClick();
                 output_textbox.setText(output_textbox.getText() + "(");
                 left_bracket++;
 
@@ -237,6 +279,8 @@ public class MainActivity extends AppCompatActivity {
             @SuppressLint("SetTextI18n")
             @Override
             public void onClick(View view) {
+                if(history_textbox.getText().length() > 1)
+                    btn_clr.performClick();
                 output_textbox.setText(output_textbox.getText() + ")");
                 right_bracket++;
             }
@@ -249,7 +293,7 @@ public class MainActivity extends AppCompatActivity {
                 if (!output_textbox.getText().toString().contains("=") && left_bracket == right_bracket) {
                     //Get equation
                     eq = output_textbox.getText().toString();
-                    history_textbox.setText(eq);
+                    history_textbox.setText(eq + " =");
 
                     //Convert String to array
                     String[] array_string = bracketHandler(eq);
@@ -262,7 +306,7 @@ public class MainActivity extends AppCompatActivity {
                         //Output
                         System.out.print(result);
                         output_textbox.setText("");
-                        String outputStr = output_textbox.getText() + " = " + formatter.format(result);
+                        String outputStr = output_textbox.getText() + formatter.format(result);
                         output_textbox.setText(outputStr);
                     }else{
                         output_textbox.setText("Syntax Error");
@@ -272,8 +316,9 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
-    }
 
+
+    }
     /**
      * Assigns numeric values to each operator
      * @param s String of operator
@@ -287,6 +332,8 @@ public class MainActivity extends AppCompatActivity {
         }
         return -1;
     }
+
+
 
     /**
      * Converts Infix String to PostFix
