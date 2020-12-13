@@ -30,7 +30,8 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         //TODO: When a number is pressed and there already is a result, ANS function
-        //TODO: Add Sin/Cos Implimination
+        //TODO: Add Sin/Cos Implementation
+
         //Number Format
         final NumberFormat formatter = new DecimalFormat("#0.00");
 
@@ -206,6 +207,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         //Operators
+        //TODO: instead of blocking, just replace like the microsoft calculator app
         btn_division.setOnClickListener(new View.OnClickListener() {
             @SuppressLint("SetTextI18n")
             @Override
@@ -333,8 +335,6 @@ public class MainActivity extends AppCompatActivity {
         return -1;
     }
 
-
-
     /**
      * Converts Infix String to PostFix
      * @param input Array of Strings
@@ -402,7 +402,6 @@ public class MainActivity extends AppCompatActivity {
         tree.printTree(root);
         return tree.evaluateTree(root);
     }
-
 
     /**
      * Handles Bracket's in equation
